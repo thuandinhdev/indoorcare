@@ -1,22 +1,25 @@
 const { DateTime } = require("luxon");
 
 module.exports = function(eleventyConfig) {
-  // Filter để định dạng ngày sang dạng dễ đọc: "04 Tháng Sáu 2024"
+  // Định dạng readableDate: "14 June 2025"
   eleventyConfig.addFilter("readableDate", (dateObj) => {
-    return DateTime.fromJSDate(dateObj, { zone: "utc" }).toFormat("dd LLL yyyy");
+    return DateTime.fromJSDate(dateObj, { zone: 'utc' }).toFormat("dd LLL yyyy");
   });
 
-  // Nếu mày vẫn cần machineDate như trước:
+  // Định dạng machineDate: "2025-06-14"
   eleventyConfig.addFilter("machineDate", (value) => {
     const date = new Date(value);
     return date.toISOString().split("T")[0];
+  });
+
+  eleventyConfig.addFilter("cssmin", function(code) {
+    return new CleanCSS({}).minify(code).styles;
   });
 
   return {
     dir: {
       input: ".",
       includes: "_includes",
-      data: "_data",
       output: "_site"
     }
   };
