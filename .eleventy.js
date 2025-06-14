@@ -1,5 +1,5 @@
 const { DateTime } = require("luxon");
-
+const CleanCSS = require("clean-css");
 module.exports = function(eleventyConfig) {
   // Định dạng readableDate: "14 June 2025"
   eleventyConfig.addFilter("readableDate", (dateObj) => {
@@ -13,8 +13,7 @@ module.exports = function(eleventyConfig) {
   });
 
   eleventyConfig.addFilter("cssmin", function(code) {
-    // return new CleanCSS({}).minify(code).styles;
-    return;
+    return new CleanCSS({}).minify(code).styles;
   });
 
   return {
